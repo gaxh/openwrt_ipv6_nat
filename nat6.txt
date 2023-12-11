@@ -1,0 +1,17 @@
+0. opkg install kmod-ipt-nat6
+1. set firewall https://openwrt.org/docs/guide-user/network/ipv6/ipv6.nat6
+# Configure firewall
+uci set firewall.@zone[1].masq6="1"
+uci commit firewall
+service firewall restart
+2. set network https://openwrt.org/docs/guide-user/network/ipv6/ipv6.nat6
+# Configure network
+uci set network.wan6.sourcefilter="0"
+uci commit network
+service network restart
+3. Announcing IPv6 default route https://openwrt.org/docs/guide-user/network/ipv6/ipv6_extras#announcing_ipv6_default_route
+uci set dhcp.lan.ra_default="1"
+uci commit dhcp
+service odhcpd restart
+
+reboot router
